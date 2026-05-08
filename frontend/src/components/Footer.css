@@ -1,0 +1,70 @@
+/* ===== FOOTER — Premium ===== */
+.footer {
+  background: #070f18;
+  border-top: 1px solid var(--border);
+  padding: 80px 0 0;
+  margin-top: auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.8fr repeat(3,1fr);
+  gap: 56px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid var(--border);
+}
+
+.footer-logo { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.footer-logo .logo-emblem {
+  width: 46px; height: 46px;
+  background: var(--green-grad); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1.1rem; flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(74,124,89,.3);
+}
+.footer-logo .logo-njp { font-size: .98rem; font-weight: 800; color: var(--text-primary); }
+.footer-logo .logo-gov { font-size: .72rem; color: var(--text-muted); margin-top: 2px; }
+
+.footer-brand p {
+  font-size: .88rem; color: var(--text-muted);
+  line-height: 1.75; margin-bottom: 24px; max-width: 280px;
+}
+
+.social-links { display: flex; gap: 10px; }
+.social-links a {
+  width: 40px; height: 40px;
+  background: var(--bg-card2); border: 1px solid var(--border);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); font-size: .88rem;
+  transition: all var(--transition);
+}
+.social-links a:hover {
+  background: var(--green); border-color: var(--green);
+  color: white; transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74,124,89,.35);
+}
+
+.footer-col h4 {
+  font-size: .9rem; font-weight: 700;
+  color: var(--text-primary); margin-bottom: 20px;
+  text-transform: uppercase; letter-spacing: .04em;
+}
+.footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+.footer-col ul li a, .footer-col ul li span {
+  font-size: .87rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: 9px;
+  transition: color var(--transition); cursor: pointer;
+}
+.footer-col ul li a:hover { color: var(--green-bright); }
+.footer-col ul li i { color: var(--green); font-size: .82rem; width: 14px; }
+
+.footer-bottom { padding: 22px 0; }
+.footer-bottom-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px;
+}
+.footer-bottom p { font-size: .82rem; color: var(--text-muted); }
+.footer-bottom strong { color: var(--text-secondary); }
+
+@media(max-width:1024px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; } }
+@media(max-width:580px)  { .footer-grid { grid-template-columns: 1fr; gap: 32px; } .footer-bottom-inner { flex-direction: column; text-align: center; } }

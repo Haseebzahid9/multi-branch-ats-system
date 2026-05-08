@@ -1,0 +1,72 @@
+/* ===== JOB CARD — Premium ===== */
+.job-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  transition: all .25s ease;
+  display: flex; flex-direction: column; gap: 16px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.job-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--green-grad);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.job-card:hover {
+  border-color: var(--border-green);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(0,0,0,.4), 0 0 0 1px rgba(74,124,89,.15);
+}
+.job-card:hover::before { opacity: 1; }
+
+.job-card-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+}
+.job-icon {
+  width: 52px; height: 52px;
+  background: rgba(74,124,89,.15);
+  border: 1px solid var(--border-green);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--green-bright); font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.job-card-badges { display: flex; gap: 7px; flex-wrap: wrap; align-items: flex-start; }
+
+.job-title {
+  font-size: 1.08rem; font-weight: 700;
+  color: var(--text-primary); line-height: 1.35;
+}
+
+.job-dept {
+  display: flex; align-items: center; gap: 7px;
+  font-size: .85rem; color: var(--text-muted);
+}
+.job-dept i { color: var(--green-bright); font-size: .8rem; }
+
+.job-meta { display: flex; flex-wrap: wrap; gap: 12px; }
+.job-meta span {
+  display: flex; align-items: center; gap: 6px;
+  font-size: .82rem; color: var(--text-muted);
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.job-meta i { color: var(--green); font-size: .75rem; }
+
+.job-card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--border); padding-top: 16px;
+  margin-top: auto;
+}
+.deadline { display: flex; align-items: center; gap: 6px; font-size: .82rem; color: var(--text-muted); }
+.deadline i { color: var(--green); }
+.deadline.expired { color: var(--red); }
+.deadline.expired i { color: var(--red); }

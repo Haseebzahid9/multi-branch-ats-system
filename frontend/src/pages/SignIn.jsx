@@ -1,0 +1,134 @@
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import api from '../utils/api';
+import { useAuth } from '../context/AuthContext';
+import './Auth.css';
+
+export default function SignIn() {
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [showPass, setShowPass] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handle = e => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!form.email || !form.password) return toast.error('Please fill all fields');
+    setLoading(true);
+    try {
+      const { data } = await api.post('/auth/login', form);
+      login(data);
+      toast.success(`Welcome back, ${data.name}!`);
+      if (data.role === 'candidate') navigate('/dashboard');
+      else navigate('/admin');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Login failed');
+    } finally { setLoading(false); }
+  };
+
+  return (
+    <div className="auth-page">
+      {/* Left panel */}
+      <div className="auth-left">
+        <div className="auth-left-inner">
+          <div className="auth-brand">
+            <div className="auth-logo-wrap">
+              <div className="auth-emblem"><i className="fas fa-briefcase"></i></div>
+              <div>
+                <div className="auth-brand-name">HireTrack ATS</div>
+                <div className="auth-brand-toggle">
+                  <span className="dot green"></span>
+                  <span className="dot-line"></span>
+                  <span className="dot green"></span>
+                  <span className="auth-brand-gov">Multi-Branch Recruitment</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h2 className="auth-tagline">Unlock Your<br/><span>Career Potential</span></h2>
+          <p className="auth-tagline-sub">Your pathway to the best tech opportunities starts here</p>
+
+          <div className="auth-mini-stats">
+            <div className="mstat"><span>50+</span><small>Active Jobs</small></div>
+            <div className="mstat"><span>4</span><small>Branches</small></div>
+            <div className="mstat"><span>1,200+</span><small>Applicants</small></div>
+          </div>
+
+          <div className="auth-features">
+            {[
+              { icon: 'fa-shield-halved', text: 'Secure JWT Authentication' },
+              { icon: 'fa-briefcase', text: 'Access to All Branch Jobs' },
+              { icon: 'fa-bolt', text: 'Real-time Application Tracking' },
+            ].map((f, i) => (
+              <div className="auth-feat" key={i}>
+                <div className="auth-feat-icon"><i className={`fas ${f.icon}`}></i></div>
+                <span>{f.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Right panel — form */}
+      <div className="auth-right">
+        <div className="auth-form-box">
+          <div className="auth-form-header">
+            <div className="auth-form-title-row">
+              <div>
+                <h2>Sign In</h2>
+                <p>Welcome back to HireTrack</p>
+              </div>
+              <div className="auth-small-emblem"><i className="fas fa-briefcase"></i></div>
+            </div>
+          </div>
+
+          <form onSubmit={submit} className="auth-form">
+            <div className="form-group">
+              <label>Email Address</label>
+              <div className="input-wrap">
+                <input name="email" value={form.email} onChange={handle} type="email" placeholder="your@email.com" autoComplete="username"/>
+                <span className="input-icon-right"><i className="fas fa-envelope"></i></span>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>Password</label>
+              <div className="input-wrap">
+                <input name="password" value={form.password} onChange={handle} type={showPass ? 'text' : 'password'} placeholder="Your password" autoComplete="current-password"/>
+                <button type="button" className="input-icon-right btn-ghost" onClick={() => setShowPass(!showPass)}>
+                  <i className={`fas ${showPass ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                </button>
+              </div>
+            </div>
+
+            <div className="auth-row-between">
+              <span></span>
+              <a href="#" className="auth-link">Forgot password?</a>
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-full btn-lg auth-submit" disabled={loading}>
+              {loading ? <><span className="spinner"></span> Signing in...</> : <><i className="fas fa-sign-in-alt"></i> Sign In</>}
+            </button>
+          </form>
+
+          <div className="auth-bottom-links">
+            <Link to="/"><i className="fas fa-home"></i><span>Home</span></Link>
+            <Link to="/signup"><i className="fas fa-user-plus"></i><span>Sign Up</span></Link>
+            <a href="mailto:haseebzahid4998@gmail.com"><i className="fas fa-circle-question"></i><span>Help</span></a>
+          </div>
+
+          <div className="auth-help-bar">
+            <i className="fas fa-circle-info"></i>
+            <div>
+              <div>Need Help?</div>
+              <div>haseebzahid4998@gmail.com &nbsp;•&nbsp; 03184006367</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
