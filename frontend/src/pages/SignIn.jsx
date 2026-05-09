@@ -38,7 +38,7 @@ export default function SignIn() {
             <div className="auth-logo-wrap">
               <div className="auth-emblem"><i className="fas fa-briefcase"></i></div>
               <div>
-                <div className="auth-brand-name">HireTrack ATS</div>
+                <div className="auth-brand-name">Job Portal ATS</div>
                 <div className="auth-brand-toggle">
                   <span className="dot green"></span>
                   <span className="dot-line"></span>
@@ -49,7 +49,7 @@ export default function SignIn() {
             </div>
           </div>
           <h2 className="auth-tagline">Unlock Your<br/><span>Career Potential</span></h2>
-          <p className="auth-tagline-sub">Your pathway to the best tech opportunities starts here</p>
+          <p className="auth-tagline-sub">Your pathway to the best tech opportunities starts here. Join thousands of professionals already hired.</p>
 
           <div className="auth-mini-stats">
             <div className="mstat"><span>50+</span><small>Active Jobs</small></div>
@@ -79,7 +79,7 @@ export default function SignIn() {
             <div className="auth-form-title-row">
               <div>
                 <h2>Sign In</h2>
-                <p>Welcome back to HireTrack</p>
+                <p>Welcome back to Job Portal ATS</p>
               </div>
               <div className="auth-small-emblem"><i className="fas fa-briefcase"></i></div>
             </div>
@@ -117,16 +117,18 @@ export default function SignIn() {
           <div className="auth-bottom-links">
             <Link to="/"><i className="fas fa-home"></i><span>Home</span></Link>
             <Link to="/signup"><i className="fas fa-user-plus"></i><span>Sign Up</span></Link>
-            <a href="mailto:haseebzahid4998@gmail.com"><i className="fas fa-circle-question"></i><span>Help</span></a>
+            <a href="mailto:haseeb4998@gmail.com"><i className="fas fa-circle-question"></i><span>Help</span></a>
           </div>
 
           <div className="auth-help-bar">
             <i className="fas fa-circle-info"></i>
             <div>
               <div>Need Help?</div>
-              <div>haseebzahid4998@gmail.com &nbsp;•&nbsp; 03184006367</div>
+              <div>haseeb4998@gmail.com &nbsp;•&nbsp; 03184006367</div>
             </div>
           </div>
+
+          <div className="auth-copyright">© 2026 Job Portal ATS — Developed by Haseeb Zahid</div>
         </div>
       </div>
     </div>

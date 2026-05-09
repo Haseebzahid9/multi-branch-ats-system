@@ -47,7 +47,7 @@ export default function SignUp() {
             <div className="auth-logo-wrap">
               <div className="auth-emblem"><i className="fas fa-briefcase"></i></div>
               <div>
-                <div className="auth-brand-name">HireTrack ATS</div>
+                <div className="auth-brand-name">Job Portal ATS</div>
                 <div className="auth-brand-toggle">
                   <span className="dot green"></span>
                   <span className="dot-line"></span>
@@ -58,7 +58,7 @@ export default function SignUp() {
             </div>
           </div>
           <h2 className="auth-tagline">Join the<br/><span>Future of Hiring</span></h2>
-          <p className="auth-tagline-sub">Create your account and start your career journey with HireTrack</p>
+          <p className="auth-tagline-sub">Create your account and start your career journey with Job Portal ATS — it's completely free.</p>
 
           <div className="auth-mini-stats">
             <div className="mstat"><span>50+</span><small>Active Jobs</small></div>
@@ -88,7 +88,7 @@ export default function SignUp() {
             <div className="auth-form-title-row">
               <div>
                 <h2>Create Account</h2>
-                <p>Join HireTrack today — it's free</p>
+                <p>Join Job Portal ATS today — it's free</p>
               </div>
               <div className="auth-small-emblem"><i className="fas fa-briefcase"></i></div>
             </div>
@@ -114,7 +114,7 @@ export default function SignUp() {
             </div>
 
             <div className="form-group">
-              <label>CNIC (optional)</label>
+              <label>CNIC <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(optional)</span></label>
               <input name="cnic" value={form.cnic} onChange={handle} placeholder="xxxxx-xxxxxxx-x"/>
             </div>
 
@@ -147,18 +147,18 @@ export default function SignUp() {
           <div className="auth-bottom-links">
             <Link to="/"><i className="fas fa-home"></i><span>Home</span></Link>
             <Link to="/signin"><i className="fas fa-sign-in-alt"></i><span>Sign In</span></Link>
-            <a href="mailto:haseebzahid4998@gmail.com"><i className="fas fa-circle-question"></i><span>Help</span></a>
+            <a href="mailto:haseeb4998@gmail.com"><i className="fas fa-circle-question"></i><span>Help</span></a>
           </div>
 
           <div className="auth-help-bar">
             <i className="fas fa-circle-info"></i>
             <div>
               <div>Need Help?</div>
-              <div>haseebzahid4998@gmail.com &nbsp;•&nbsp; 03184006367</div>
+              <div>haseeb4998@gmail.com &nbsp;•&nbsp; 03184006367</div>
             </div>
           </div>
 
-          <div className="auth-copyright">© 2026 HireTrack ATS — Developed by Haseeb Zahid</div>
+          <div className="auth-copyright">© 2026 Job Portal ATS — Developed by Haseeb Zahid</div>
         </div>
       </div>
     </div>

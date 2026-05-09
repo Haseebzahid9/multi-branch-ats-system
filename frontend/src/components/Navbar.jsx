@@ -31,7 +31,7 @@ export default function Navbar() {
             <i className="fas fa-briefcase"></i>
           </div>
           <div className="logo-text">
-            <span className="logo-njp">HireTrack ATS</span>
+            <span className="logo-njp">Job Portal ATS</span>
             <span className="logo-gov">Multi-Branch Recruitment</span>
           </div>
         </Link>
@@ -40,7 +40,7 @@ export default function Navbar() {
         <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
           <li><Link to="/" className={isActive('/') && location.pathname === '/' ? 'active' : ''}>Home</Link></li>
           <li><Link to="/jobs" className={isActive('/jobs') ? 'active' : ''}>Find Jobs</Link></li>
-          {!user && <li><Link to="/signup" className={isActive('/signup') ? 'active' : ''}>Success Stories</Link></li>}
+          {!user && <li><a href="/#success" className="">Success Stories</a></li>}
           {user && !isHR && <li><Link to="/dashboard" className={isActive('/dashboard') ? 'active' : ''}>My Applications</Link></li>}
           {isHR && <li><Link to="/admin" className={isActive('/admin') ? 'active' : ''}>Dashboard</Link></li>}
           {isHR && <li><Link to="/admin/jobs" className={isActive('/admin/jobs') ? 'active' : ''}>Manage Jobs</Link></li>}
@@ -58,13 +58,13 @@ export default function Navbar() {
               <button className="user-btn">
                 <div className="user-avatar">{user.name?.charAt(0).toUpperCase()}</div>
                 <span className="user-name hide-mobile">{user.name?.split(' ')[0]}</span>
-                <i className="fas fa-chevron-down" style={{ fontSize: '.7rem' }}></i>
+                <i className="fas fa-chevron-down" style={{ fontSize: '.68rem', opacity: .7 }}></i>
               </button>
               <div className="user-dropdown">
                 <div className="dropdown-header">
                   <strong>{user.name}</strong>
                   <span>{user.email}</span>
-                  <span className="badge badge-green" style={{ marginTop: '4px' }}>{user.role}</span>
+                  <span className="badge badge-green" style={{ marginTop: '6px' }}>{user.role}</span>
                 </div>
                 <div className="dropdown-divider"></div>
                 <Link to="/profile"><i className="fas fa-user"></i> My Profile</Link>
@@ -78,7 +78,7 @@ export default function Navbar() {
         </div>
 
         {/* Hamburger */}
-        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
           <span className={menuOpen ? 'open' : ''}></span>
           <span className={menuOpen ? 'open' : ''}></span>
           <span className={menuOpen ? 'open' : ''}></span>

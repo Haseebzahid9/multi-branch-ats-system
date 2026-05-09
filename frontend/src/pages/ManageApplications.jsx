@@ -4,7 +4,14 @@ import api from '../utils/api';
 import './AdminDashboard.css';
 
 const STATUSES = ['Submitted', 'Under Review', 'Shortlisted', 'Interview Scheduled', 'Rejected', 'Selected'];
-const BADGE = { 'Submitted':'badge-gray', 'Under Review':'badge-yellow', 'Shortlisted':'badge-green', 'Interview Scheduled':'badge-blue', 'Rejected':'badge-red', 'Selected':'badge-green' };
+const BADGE = {
+  'Submitted': 'badge-gray',
+  'Under Review': 'badge-yellow',
+  'Shortlisted': 'badge-green',
+  'Interview Scheduled': 'badge-blue',
+  'Rejected': 'badge-red',
+  'Selected': 'badge-green',
+};
 
 export default function ManageApplications() {
   const [apps, setApps] = useState([]);
@@ -22,7 +29,9 @@ export default function ManageApplications() {
     const p = {};
     if (filter.status) p.status = filter.status;
     if (filter.jobId) p.jobId = filter.jobId;
-    api.get('/applications', { params: p }).then(r => { setApps(r.data); setLoading(false); }).catch(() => setLoading(false));
+    api.get('/applications', { params: p })
+      .then(r => { setApps(r.data); setLoading(false); })
+      .catch(() => setLoading(false));
   };
   useEffect(() => { api.get('/jobs').then(r => setJobs(r.data)); }, []);
   useEffect(load, [filter]);
@@ -58,37 +67,68 @@ export default function ManageApplications() {
     <div className="admin-dash page-content">
       <div className="container">
         <div className="admin-header">
-          <h1><i className="fas fa-file-alt"></i> Manage Applications</h1>
-          <span className="text-muted text-sm">{apps.length} application{apps.length !== 1 ? 's' : ''}</span>
+          <div>
+            <h1><i className="fas fa-file-alt"></i> Manage Applications</h1>
+            <p className="text-muted" style={{ marginTop: '6px' }}>{apps.length} application{apps.length !== 1 ? 's' : ''} found</p>
+          </div>
         </div>
 
         {/* Filters */}
-        <div className="jobs-filters card mb-16" style={{ marginBottom: '20px' }}>
-          <select value={filter.status} onChange={e => setFilter({ ...filter, status: e.target.value })}>
+        <div className="card" style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center', marginBottom: '24px', padding: '20px 24px' }}>
+          <select
+            value={filter.status}
+            onChange={e => setFilter({ ...filter, status: e.target.value })}
+            style={{ minWidth: '200px', flex: '1' }}
+          >
             <option value="">All Statuses</option>
             {STATUSES.map(s => <option key={s}>{s}</option>)}
           </select>
-          <select value={filter.jobId} onChange={e => setFilter({ ...filter, jobId: e.target.value })}>
+          <select
+            value={filter.jobId}
+            onChange={e => setFilter({ ...filter, jobId: e.target.value })}
+            style={{ minWidth: '220px', flex: '1' }}
+          >
             <option value="">All Jobs</option>
             {jobs.map(j => <option key={j._id} value={j._id}>{j.title} ({j.branch})</option>)}
           </select>
           {(filter.status || filter.jobId) && (
-            <button className="btn btn-ghost btn-sm" onClick={() => setFilter({ status: '', jobId: '' })}><i className="fas fa-times"></i> Clear</button>
+            <button
+              className="btn btn-ghost btn-sm"
+              onClick={() => setFilter({ status: '', jobId: '' })}
+            >
+              <i className="fas fa-times"></i> Clear Filters
+            </button>
           )}
         </div>
 
         <div className="card">
-          {loading ? <div className="loading-full" style={{ minHeight: '200px' }}><div className="spinner"></div></div>
-          : apps.length === 0 ? <div className="empty-state"><i className="fas fa-file-alt"></i><h3>No applications found</h3></div>
-          : (
+          {loading ? (
+            <div className="loading-full" style={{ minHeight: '220px' }}><div className="spinner"></div></div>
+          ) : apps.length === 0 ? (
+            <div className="empty-state">
+              <i className="fas fa-file-alt"></i>
+              <h3>No applications found</h3>
+              <p>Try adjusting your filters to see more results</p>
+            </div>
+          ) : (
             <div className="table-wrap">
               <table>
-                <thead><tr><th>Candidate</th><th>Job</th><th>Branch</th><th>Applied</th><th>Status</th><th>Resume</th><th>Actions</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>Candidate</th>
+                    <th>Job</th>
+                    <th>Branch</th>
+                    <th>Applied</th>
+                    <th>Status</th>
+                    <th>Resume</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
                 <tbody>
                   {apps.map(app => (
                     <tr key={app._id}>
                       <td>
-                        <div className="fw-bold">{app.candidateId?.name}</div>
+                        <div style={{ fontWeight: 600 }}>{app.candidateId?.name}</div>
                         <div className="text-muted text-xs">{app.candidateId?.email}</div>
                         {app.candidateId?.phone && <div className="text-muted text-xs">{app.candidateId.phone}</div>}
                       </td>
@@ -97,16 +137,32 @@ export default function ManageApplications() {
                       <td className="text-muted text-sm">{new Date(app.appliedDate).toLocaleDateString('en-PK')}</td>
                       <td><span className={`badge ${BADGE[app.status] || 'badge-gray'}`}>{app.status}</span></td>
                       <td>
-                        {app.resumeURL && <a href={app.resumeURL} target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm"><i className="fas fa-file-pdf"></i></a>}
-                        {app.coverLetterURL && <a href={app.coverLetterURL} target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm"><i className="fas fa-file-word"></i></a>}
+                        <div className="flex-gap">
+                          {app.resumeURL && (
+                            <a href={app.resumeURL} target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm" title="Resume">
+                              <i className="fas fa-file-pdf"></i>
+                            </a>
+                          )}
+                          {app.coverLetterURL && (
+                            <a href={app.coverLetterURL} target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm" title="Cover Letter">
+                              <i className="fas fa-file-word"></i>
+                            </a>
+                          )}
+                        </div>
                       </td>
                       <td>
                         <div className="flex-gap">
-                          <button className="btn btn-ghost btn-sm" onClick={() => { setSelected(app); setNewStatus(app.status); setHrNotes(app.hrNotes || ''); }}>
+                          <button
+                            className="btn btn-ghost btn-sm"
+                            onClick={() => { setSelected(app); setNewStatus(app.status); setHrNotes(app.hrNotes || ''); }}
+                          >
                             <i className="fas fa-edit"></i> Update
                           </button>
-                          {(app.status === 'Shortlisted') && (
-                            <button className="btn btn-green btn-sm" onClick={() => { setSelected(app); setShowIntModal(true); }}>
+                          {app.status === 'Shortlisted' && (
+                            <button
+                              className="btn btn-green btn-sm"
+                              onClick={() => { setSelected(app); setShowIntModal(true); }}
+                            >
                               <i className="fas fa-calendar-plus"></i>
                             </button>
                           )}
@@ -127,7 +183,9 @@ export default function ManageApplications() {
           <div className="modal" onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={() => setSelected(null)}><i className="fas fa-times"></i></button>
             <h2 className="modal-title">Update Application Status</h2>
-            <p className="text-muted text-sm mb-16">{selected.candidateId?.name} · {selected.jobId?.title}</p>
+            <p className="text-muted text-sm mb-16">
+              <strong>{selected.candidateId?.name}</strong> · {selected.jobId?.title}
+            </p>
             <div className="form-group">
               <label>New Status</label>
               <select value={newStatus} onChange={e => setNewStatus(e.target.value)}>
@@ -135,8 +193,8 @@ export default function ManageApplications() {
               </select>
             </div>
             <div className="form-group">
-              <label>HR Notes (internal)</label>
-              <textarea rows="3" value={hrNotes} onChange={e => setHrNotes(e.target.value)} placeholder="Internal notes..."/>
+              <label>HR Notes <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(internal)</span></label>
+              <textarea rows="3" value={hrNotes} onChange={e => setHrNotes(e.target.value)} placeholder="Internal notes for this application..."/>
             </div>
             <div className="flex-gap">
               <button className="btn btn-green" onClick={() => updateStatus(selected._id)} disabled={saving}>
@@ -154,13 +212,27 @@ export default function ManageApplications() {
           <div className="modal" onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={() => { setShowIntModal(false); setSelected(null); }}><i className="fas fa-times"></i></button>
             <h2 className="modal-title"><i className="fas fa-calendar-plus"></i> Schedule Interview</h2>
-            <p className="text-muted text-sm mb-16">{selected.candidateId?.name} · {selected.jobId?.title}</p>
+            <p className="text-muted text-sm mb-16">
+              <strong>{selected.candidateId?.name}</strong> · {selected.jobId?.title}
+            </p>
             <div className="form-row-2">
-              <div className="form-group"><label>Interview Date <span className="req">*</span></label><input type="date" value={intForm.interviewDate} onChange={e => setIntForm({ ...intForm, interviewDate: e.target.value })}/></div>
-              <div className="form-group"><label>Time <span className="req">*</span></label><input type="time" value={intForm.interviewTime} onChange={e => setIntForm({ ...intForm, interviewTime: e.target.value })}/></div>
+              <div className="form-group">
+                <label>Interview Date <span className="req">*</span></label>
+                <input type="date" value={intForm.interviewDate} onChange={e => setIntForm({ ...intForm, interviewDate: e.target.value })}/>
+              </div>
+              <div className="form-group">
+                <label>Time <span className="req">*</span></label>
+                <input type="time" value={intForm.interviewTime} onChange={e => setIntForm({ ...intForm, interviewTime: e.target.value })}/>
+              </div>
             </div>
-            <div className="form-group"><label>Location</label><input value={intForm.location} onChange={e => setIntForm({ ...intForm, location: e.target.value })} placeholder="Online (Google Meet)"/></div>
-            <div className="form-group"><label>Message to Candidate</label><textarea rows="3" value={intForm.message} onChange={e => setIntForm({ ...intForm, message: e.target.value })} placeholder="Additional instructions..."/></div>
+            <div className="form-group">
+              <label>Location</label>
+              <input value={intForm.location} onChange={e => setIntForm({ ...intForm, location: e.target.value })} placeholder="Online (Google Meet)"/>
+            </div>
+            <div className="form-group">
+              <label>Message to Candidate</label>
+              <textarea rows="3" value={intForm.message} onChange={e => setIntForm({ ...intForm, message: e.target.value })} placeholder="Additional instructions or preparation notes..."/>
+            </div>
             <div className="flex-gap">
               <button className="btn btn-green" onClick={() => scheduleInterview(selected)} disabled={saving}>
                 {saving ? <><span className="spinner"></span> Scheduling...</> : <><i className="fas fa-paper-plane"></i> Schedule & Notify</>}

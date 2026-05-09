@@ -14,8 +14,8 @@ const FEATURES = [
 ];
 
 const TESTIMONIALS = [
-  { name: 'Ali Ahmed', role: 'Software Engineer', dept: 'Islamabad Branch', quote: 'HireTrack made my job search incredibly easy. The application process was smooth and I got hired within 2 weeks!' },
-  { name: 'Fatima Khan', role: 'Project Manager', dept: 'Lahore Branch', quote: 'I was able to track my application status in real-time and received timely notifications. The portal\'s interface is amazing!' },
+  { name: 'Ali Ahmed', role: 'Software Engineer', dept: 'Islamabad Branch', quote: 'Job Portal ATS made my job search incredibly easy. The application process was smooth and I got hired within 2 weeks!' },
+  { name: 'Fatima Khan', role: 'Project Manager', dept: 'Lahore Branch', quote: "I was able to track my application status in real-time and received timely notifications. The portal's interface is amazing!" },
   { name: 'Hassan Raza', role: 'UI/UX Designer', dept: 'Remote', quote: 'Finally a merit-based system that values qualifications and experience. No more physical applications and long queues.' },
 ];
 
@@ -48,6 +48,7 @@ export default function Home() {
         <div className="hero-dots"></div>
         <div className="container hero-inner">
           <div className="hero-left">
+            <div className="section-badge"><i className="fas fa-briefcase"></i> Pakistan's #1 ATS Platform</div>
             <h1 className="hero-title">
               Your Gateway to<br/>
               <span className="hero-hl">Top Tech</span><br/>
@@ -58,9 +59,11 @@ export default function Home() {
               Build your career with transparency, trust, and excellence.
             </p>
             <div className="hero-actions">
+              <Link to="/jobs" className="btn btn-primary btn-lg">
+                <i className="fas fa-search"></i> Explore All Jobs
+              </Link>
               <button className="btn btn-outline btn-lg" onClick={handleSearch}>
-                <i className="fas fa-search"></i> Start Job Search
-                <i className="fas fa-arrow-right"></i>
+                Quick Search <i className="fas fa-arrow-right"></i>
               </button>
             </div>
             <div className="hero-stats">
@@ -77,7 +80,7 @@ export default function Home() {
               { icon: 'fa-bell', title: 'Instant Alerts', sub: 'Get notified immediately' },
               { icon: 'fa-crosshairs', title: 'Easy Apply', sub: 'Simple application process' },
               { icon: 'fa-trophy', title: 'Career Growth', sub: 'Build your future' },
-              { icon: 'fa-circle-question', title: 'Need Help?', sub: 'Email: haseebzahid4998@gmail.com\nPhone: 03184006367' },
+              { icon: 'fa-circle-question', title: 'Need Help?', sub: 'Email: haseeb4998@gmail.com\nPhone: 03184006367' },
             ].map((f, i) => (
               <div className={`hcard hcard-${i}`} key={i}>
                 <div className="hcard-icon"><i className={`fas ${f.icon}`}></i></div>
@@ -102,7 +105,7 @@ export default function Home() {
             <div className="search-row">
               <div className="search-field">
                 <i className="fas fa-search"></i>
-                <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Job title, keywords, or company"/>
+                <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Job title, keywords, or department"/>
               </div>
               <div className="search-field">
                 <i className="fas fa-location-dot"></i>
@@ -122,13 +125,13 @@ export default function Home() {
             <div className="search-row2">
               <div className="search-field">
                 <i className="fas fa-chart-bar"></i>
-                <select><option value="">Experience</option><option>Fresh</option><option>1-2 years</option><option>3-5 years</option><option>5+ years</option></select>
+                <select><option value="">Experience Level</option><option>Fresh</option><option>1-2 years</option><option>3-5 years</option><option>5+ years</option></select>
               </div>
               <div className="search-field">
                 <i className="fas fa-coins"></i>
                 <select><option value="">Salary Range</option><option>30k-50k</option><option>50k-100k</option><option>100k-200k</option><option>200k+</option></select>
               </div>
-              <button type="submit" className="btn btn-outline search-submit-btn">
+              <button type="submit" className="btn btn-primary search-submit-btn">
                 <i className="fas fa-search"></i> Search Jobs
               </button>
             </div>
@@ -145,17 +148,22 @@ export default function Home() {
       {/* ===== LATEST JOBS ===== */}
       <section className="latest-jobs section">
         <div className="container">
-          <div className="flex-between mb-24">
+          <div className="flex-between mb-32">
             <div>
+              <div className="section-badge" style={{ marginBottom: '14px' }}><i className="fas fa-fire"></i> Fresh Opportunities</div>
               <h2 className="section-title">Latest <span className="hl">Job Openings</span></h2>
-              <p className="text-muted text-sm">Fresh opportunities posted recently</p>
+              <p className="text-muted text-sm" style={{ marginTop: '8px' }}>Fresh opportunities posted recently across all branches</p>
             </div>
-            <Link to="/jobs" className="btn btn-green btn-sm">View All <i className="fas fa-arrow-right"></i></Link>
+            <Link to="/jobs" className="btn btn-green">View All Jobs <i className="fas fa-arrow-right"></i></Link>
           </div>
           {jobs.length > 0 ? (
             <div className="grid-3">{jobs.map(j => <JobCard key={j._id} job={j}/>)}</div>
           ) : (
-            <div className="empty-state"><i className="fas fa-briefcase"></i><h3>No jobs posted yet</h3></div>
+            <div className="empty-state">
+              <i className="fas fa-briefcase"></i>
+              <h3>No jobs posted yet</h3>
+              <p>Check back soon for new opportunities</p>
+            </div>
           )}
         </div>
       </section>
@@ -163,9 +171,12 @@ export default function Home() {
       {/* ===== FEATURES ===== */}
       <section className="features-section section">
         <div className="container">
-          <div className="text-center mb-24">
-            <h2 className="section-title">Why Choose <span className="hl">HireTrack ATS?</span></h2>
-            <p className="text-muted">The most efficient multi-branch recruitment and applicant tracking system</p>
+          <div className="text-center mb-32">
+            <div className="section-badge" style={{ marginBottom: '16px' }}><i className="fas fa-star"></i> Why Us</div>
+            <h2 className="section-title">Why Choose <span className="hl">Job Portal ATS?</span></h2>
+            <p className="text-muted" style={{ maxWidth: '560px', margin: '12px auto 0' }}>
+              The most efficient multi-branch recruitment and applicant tracking system in Pakistan
+            </p>
           </div>
           <div className="grid-3">
             {FEATURES.map((f, i) => (
@@ -182,9 +193,12 @@ export default function Home() {
       {/* ===== TESTIMONIALS ===== */}
       <section className="testimonials section" id="success">
         <div className="container">
-          <div className="text-center mb-24">
+          <div className="text-center mb-32">
+            <div className="section-badge" style={{ marginBottom: '16px' }}><i className="fas fa-quote-left"></i> Success Stories</div>
             <h2 className="section-title"><span className="hl">Success</span> Stories</h2>
-            <p className="text-muted">Hear from those who found their dream jobs through HireTrack</p>
+            <p className="text-muted" style={{ maxWidth: '520px', margin: '12px auto 0' }}>
+              Hear from those who found their dream jobs through Job Portal ATS
+            </p>
           </div>
           <div className="grid-3">
             {TESTIMONIALS.map((t, i) => (
@@ -205,17 +219,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ===== CTA ===== */}
-      <section className="cta-section">
-        <div className="container cta-inner">
-          <h2>Ready to Start Your Journey?</h2>
-          <p>Join {stats.users}+ applicants who found their dream jobs through HireTrack</p>
-          <Link to="/signup" className="btn btn-outline btn-lg cta-btn">
-            Get Started Now <i className="fas fa-arrow-right"></i>
-          </Link>
         </div>
       </section>
     </div>

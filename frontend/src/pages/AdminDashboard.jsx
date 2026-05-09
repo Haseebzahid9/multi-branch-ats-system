@@ -6,7 +6,7 @@ import './AdminDashboard.css';
 
 export default function AdminDashboard() {
   const { user } = useAuth();
-  const [stats, setStats] = useState({ jobs: 0, applications: 0, interviews: 0, users: 0 });
+  const [stats, setStats] = useState({ jobs: 0, applications: 0, interviews: 0, pending: 0 });
   const [recentApps, setRecentApps] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -43,7 +43,11 @@ export default function AdminDashboard() {
         <div className="admin-header">
           <div>
             <h1>Admin Dashboard</h1>
-            <p className="text-muted">Welcome back, <strong>{user?.name}</strong> · <span className="badge badge-green">{user?.role}</span></p>
+            <p className="text-muted" style={{ marginTop: '6px' }}>
+              Welcome back, <strong style={{ color: 'var(--text-primary)' }}>{user?.name}</strong>
+              &nbsp;·&nbsp;
+              <span className="badge badge-green">{user?.role}</span>
+            </p>
           </div>
           <Link to="/admin/jobs" className="btn btn-green"><i className="fas fa-plus"></i> Post New Job</Link>
         </div>
@@ -82,26 +86,43 @@ export default function AdminDashboard() {
         </div>
 
         {/* Recent Applications */}
-        <h2 className="admin-section-title mt-24">Recent Applications</h2>
+        <h2 className="admin-section-title mt-32">Recent Applications</h2>
         <div className="card">
           {recentApps.length === 0 ? (
-            <div className="empty-state"><i className="fas fa-file-alt"></i><h3>No applications yet</h3></div>
+            <div className="empty-state">
+              <i className="fas fa-file-alt"></i>
+              <h3>No applications yet</h3>
+              <p>Applications submitted by candidates will appear here</p>
+            </div>
           ) : (
             <div className="table-wrap">
               <table>
-                <thead><tr><th>Candidate</th><th>Job</th><th>Branch</th><th>Applied</th><th>Status</th><th>Action</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>Candidate</th>
+                    <th>Job</th>
+                    <th>Branch</th>
+                    <th>Applied</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
                 <tbody>
                   {recentApps.map(app => (
                     <tr key={app._id}>
                       <td>
-                        <div>{app.candidateId?.name || 'N/A'}</div>
+                        <div style={{ fontWeight: 600 }}>{app.candidateId?.name || 'N/A'}</div>
                         <div className="text-muted text-xs">{app.candidateId?.email}</div>
                       </td>
                       <td className="text-sm">{app.jobId?.title}</td>
                       <td><span className="badge badge-gray">{app.jobId?.branch}</span></td>
                       <td className="text-muted text-sm">{new Date(app.appliedDate).toLocaleDateString('en-PK')}</td>
                       <td><StatusBadge s={app.status}/></td>
-                      <td><Link to="/admin/applications" className="btn btn-ghost btn-sm"><i className="fas fa-eye"></i></Link></td>
+                      <td>
+                        <Link to="/admin/applications" className="btn btn-ghost btn-sm">
+                          <i className="fas fa-eye"></i> View
+                        </Link>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -115,6 +136,13 @@ export default function AdminDashboard() {
 }
 
 function StatusBadge({ s }) {
-  const map = { 'Submitted':'badge-gray', 'Under Review':'badge-yellow', 'Shortlisted':'badge-green', 'Interview Scheduled':'badge-blue', 'Rejected':'badge-red', 'Selected':'badge-green' };
+  const map = {
+    'Submitted': 'badge-gray',
+    'Under Review': 'badge-yellow',
+    'Shortlisted': 'badge-green',
+    'Interview Scheduled': 'badge-blue',
+    'Rejected': 'badge-red',
+    'Selected': 'badge-green',
+  };
   return <span className={`badge ${map[s] || 'badge-gray'}`}>{s}</span>;
 }

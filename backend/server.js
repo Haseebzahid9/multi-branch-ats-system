@@ -22,6 +22,7 @@ app.use('/api/jobs', require('./routes/jobRoutes'));
 app.use('/api/applications', require('./routes/applicationRoutes'));
 app.use('/api/interviews', require('./routes/interviewRoutes'));
 app.use('/api/branches', require('./routes/branchRoutes'));
+app.use('/api/contact', require('./routes/contactRoutes'));
 
 // Health check
 app.get('/', (req, res) => res.json({ message: 'ATS API is running', status: 'OK' }));

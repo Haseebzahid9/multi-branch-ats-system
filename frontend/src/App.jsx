@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -20,17 +20,14 @@ import ManageBranches from './pages/ManageBranches';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 
-export default function App() {
+const DASHBOARD_PATHS = ['/dashboard', '/profile', '/admin'];
+
+function AppInner() {
+  const location = useLocation();
+  const isDashboard = DASHBOARD_PATHS.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
+
   return (
-    <AuthProvider>
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          style: { background: '#1a2e3a', color: '#e0e0e0', border: '1px solid #2a4a5a' },
-          success: { iconTheme: { primary: '#5dd88a', secondary: '#0d1f2d' } },
-          error: { iconTheme: { primary: '#ef4444', secondary: '#0d1f2d' } },
-        }}
-      />
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -66,7 +63,32 @@ export default function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {!isDashboard && <Footer />}
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: '#162433',
+            color: '#e8edf2',
+            border: '1px solid rgba(255,255,255,.1)',
+            borderRadius: '12px',
+            fontSize: '.91rem',
+            padding: '14px 18px',
+            boxShadow: '0 8px 32px rgba(0,0,0,.45)',
+          },
+          success: { iconTheme: { primary: '#5dd88a', secondary: '#0d1f2d' } },
+          error: { iconTheme: { primary: '#ef4444', secondary: '#0d1f2d' } },
+          duration: 4000,
+        }}
+      />
+      <AppInner />
     </AuthProvider>
   );
 }
