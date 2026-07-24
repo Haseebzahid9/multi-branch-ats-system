@@ -1,6 +1,6 @@
 # HireTrack ATS — Multi-Branch Applicant Tracking System
 
-A full-stack recruitment and applicant tracking system built for organizations with multiple office locations. HireTrack lets candidates browse and apply for jobs across branches while giving HR teams and admins a complete suite of tools to manage postings, applications, interviews, and staff.
+A full-stack recruitment and applicant tracking system built for organizations with multiple office locations. HireTrack lets candidates browse and apply for jobs across branches while giving HR teams and admins a complete suite of tools to manage postings,  applications, interviews, and staff.
 
 ---
 
